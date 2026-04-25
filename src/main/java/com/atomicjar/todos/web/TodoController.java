@@ -1,7 +1,7 @@
 package com.atomicjar.todos.web;
 
 import com.atomicjar.todos.entity.Todo;
-import com.atomicjar.todos.hn.HackernewsClient;
+import com.atomicjar.todos.hn.TodoSyncWithHackerNews;
 import com.atomicjar.todos.repository.TodoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +13,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/todos")
 public class TodoController {
     private final TodoRepository repository;
-    private final HackernewsClient hackernewsClient;
+    private final TodoSyncWithHackerNews todoSyncWithHackerNews;
 
-    public TodoController(TodoRepository repository, HackernewsClient hackernewsClient) {
+    public TodoController(TodoRepository repository, TodoSyncWithHackerNews todoSyncWithHackerNews) {
         this.repository = repository;
-        this.hackernewsClient = hackernewsClient;
+        this.todoSyncWithHackerNews = todoSyncWithHackerNews;
     }
 
     @GetMapping
@@ -27,7 +27,7 @@ public class TodoController {
 
     @PostMapping("/hn")
     public void populateFromHN() {
-        hackernewsClient.getTopStories(4);
+        todoSyncWithHackerNews.updateTodoWithHackerNewsTopStories(4);
     }
 
     @GetMapping("/{id}")

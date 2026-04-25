@@ -16,7 +16,7 @@ import java.util.List;
 
 // class to query the Hackernews API, and return HackernewsItem objects
 @Component
-public class HackernewsClient {
+public class TodoSyncWithHackerNews {
 
   @Value( "${hackernews.base-url:https://hacker-news.firebaseio.com/v0/}" )
   private String baseUrl;
@@ -33,7 +33,7 @@ public class HackernewsClient {
         .build();
   }
 
-  public void getTopStories(int n) {
+  public void updateTodoWithHackerNewsTopStories(int n) {
     Mono.fromRunnable(() -> {
       List<Integer> ids = fetchTopStoryIds(n);
       for (Integer id : ids) {
