@@ -1,6 +1,6 @@
 package com.atomicjar.todos;
 
-import com.atomicjar.todos.entity.TodoEntity;
+import com.atomicjar.todos.entity.Todo;
 import com.atomicjar.todos.repository.TodoRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +37,10 @@ class DataLoader {
         if(!todoRepository.findAll().isEmpty()) {
             return;
         }
-        TodoEntity t1 = new TodoEntity();
-        t1.setTitle("Learn about Testcontainers");
+        Todo t1 = new Todo(null, "Learn about Testcontainers", null, null, null);
         todoRepository.save(t1);
 
-        TodoEntity t2 = new TodoEntity();
-        t2.setTitle("Learn about WireMock");
+        Todo t2 = new Todo(null, "Learn about WireMock", null, null, null);
         todoRepository.save(t2);
     }
 }

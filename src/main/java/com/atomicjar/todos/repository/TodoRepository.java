@@ -1,8 +1,8 @@
 package com.atomicjar.todos.repository;
 
+import com.atomicjar.todos.entity.Todo;
 import com.atomicjar.todos.entity.TodoEntity;
 import com.atomicjar.todos.hn.HackernewsItem;
-import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,31 +24,33 @@ public class TodoRepository {
         }
     }
 
-    public List<TodoEntity> findAll() {
-        return springTodoRepository.findAll();
+    public List<Todo> findAll() {
+        List<TodoEntity> allTodosFromDb = springTodoRepository.findAll();
+        return allTodosFromDb.stream().map(TodoEntity::toTodo).toList();
     }
 
-    public Optional<TodoEntity> findById(String id) {
-        return springTodoRepository.findById(id);
+    public Optional<Todo> findById(String id) {
+        return springTodoRepository.findById(id).map(TodoEntity::toTodo);
     }
 
-    public TodoEntity save(@Valid TodoEntity todo) {
-        return springTodoRepository.save(todo);
+    public Todo save(Todo todo) {
+        TodoEntity entity = TodoEntity.fromTodo(todo);
+        return springTodoRepository.save(entity).toTodo();
     }
 
-    public void delete(TodoEntity todo) {
-        springTodoRepository.delete(todo);
+    public void delete(Todo todo) {
+        springTodoRepository.delete(TodoEntity.fromTodo(todo));
     }
 
     public void deleteAll() {
         springTodoRepository.deleteAll();
     }
 
-    public void saveAll(List<TodoEntity> todos) {
-        springTodoRepository.saveAll(todos);
+    public void saveAll(List<Todo> todos) {
+        springTodoRepository.saveAll(todos.stream().map(TodoEntity::fromTodo).toList());
     }
 
-    public List<TodoEntity> getPendingTodos() {
-        return springTodoRepository.getPendingTodos();
+    public List<Todo> getPendingTodos() {
+        return springTodoRepository.getPendingTodos().stream().map(TodoEntity::toTodo).toList();
     }
 }

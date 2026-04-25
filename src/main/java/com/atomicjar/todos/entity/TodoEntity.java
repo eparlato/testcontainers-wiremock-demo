@@ -82,6 +82,14 @@ public class TodoEntity {
         return ServletUriComponentsBuilder.fromCurrentContextPath().toUriString() + "/todos/" + this.getId();
     }
 
+    public Todo toTodo() {
+        return new Todo(id, title, link, completed, order);
+    }
+
+    public static TodoEntity fromTodo(Todo todo) {
+        return new TodoEntity(todo.id(), todo.title(), todo.link(), todo.completed(), todo.order());
+    }
+
     @Override
     public String toString() {
         return "Todo{" +

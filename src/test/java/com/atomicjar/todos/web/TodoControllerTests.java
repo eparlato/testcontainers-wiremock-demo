@@ -1,6 +1,6 @@
 package com.atomicjar.todos.web;
 
-import com.atomicjar.todos.entity.TodoEntity;
+import com.atomicjar.todos.entity.Todo;
 import com.atomicjar.todos.repository.SpringTodoRepository;
 import com.atomicjar.todos.repository.TodoRepository;
 import io.restassured.RestAssured;
@@ -46,9 +46,9 @@ public class TodoControllerTests {
 
     @Test
     void shouldGetAllTodos() {
-        List<TodoEntity> todos = List.of(
-                new TodoEntity(null, "Todo Item 1", "aLink", false, 1),
-                new TodoEntity(null, "Todo Item 2", "aLink", false, 2)
+        List<Todo> todos = List.of(
+                new Todo(null, "Todo Item 1", "aLink", false, 1),
+                new Todo(null, "Todo Item 2", "aLink", false, 2)
         );
         repository.saveAll(todos);
 
@@ -63,12 +63,12 @@ public class TodoControllerTests {
 
     @Test
     void shouldGetTodoById() {
-        TodoEntity todo = repository.save(new TodoEntity(null, "Todo Item 1", "aProperLink", false, 1));
+        Todo todo = repository.save(new Todo(null, "Todo Item 1", "aProperLink", false, 1));
 
         given()
                 .contentType(ContentType.JSON)
                 .when()
-                .get("/todos/{id}", todo.getId())
+                .get("/todos/{id}", todo.id())
                 .then()
                 .statusCode(200)
                 .body("title", is("Todo Item 1"))
@@ -101,16 +101,16 @@ public class TodoControllerTests {
 
     @Test
     void shouldDeleteTodoById() {
-        TodoEntity todo = repository.save(new TodoEntity(null, "Todo Item 1", "aLink", false, 1));
+        Todo todo = repository.save(new Todo(null, "Todo Item 1", "aLink", false, 1));
 
-        assertThat(repository.findById(todo.getId())).isPresent();
+        assertThat(repository.findById(todo.id())).isPresent();
         given()
                 .contentType(ContentType.JSON)
                 .when()
-                .delete("/todos/{id}", todo.getId())
+                .delete("/todos/{id}", todo.id())
                 .then()
                 .statusCode(200);
 
-        assertThat(repository.findById(todo.getId())).isEmpty();
+        assertThat(repository.findById(todo.id())).isEmpty();
     }
 }
