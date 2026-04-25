@@ -5,7 +5,7 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="system-boundary" value="&lt;b&gt;Todo Application&lt;/b&gt;&lt;br&gt;[Spring Boot 3.1.2 / Java 17]" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;dashPattern=5 5;fillColor=none;strokeColor=#444444;strokeWidth=2;verticalAlign=top;align=left;spacingTop=10;spacingLeft=15;fontSize=14;arcSize=14;" parent="1" vertex="1">
-          <mxGeometry x="240" y="140" width="700" height="560" as="geometry" />
+          <mxGeometry x="-70" y="140" width="1270" height="450" as="geometry" />
         </mxCell>
         <mxCell id="user" value="&lt;b&gt;User&lt;/b&gt;&lt;br&gt;[Person]&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Uses the Todo API&lt;br&gt;via HTTP requests&lt;/font&gt;" style="shape=mxgraph.c4.person2;whiteSpace=wrap;html=1;container=0;align=center;fillColor=#08427B;fontColor=#ffffff;strokeColor=#073B6F;fontSize=12;arcSize=50;" parent="1" vertex="1">
           <mxGeometry x="510" y="-70" width="180" height="140" as="geometry" />
@@ -13,20 +13,25 @@
         <mxCell id="controller" value="&lt;b&gt;TodoController&lt;/b&gt;&lt;br&gt;[Component: REST Controller]&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Handles CRUD on /todos&lt;br&gt;and POST /todos/hn&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=5;" parent="1" vertex="1">
           <mxGeometry x="460" y="200" width="280" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="hn-client" value="&lt;b&gt;HackernewsClient&lt;/b&gt;&lt;br&gt;[Component: HTTP Client]&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Fetches top stories from&lt;br&gt;Hacker News via WebClient.&lt;br&gt;Deduplicates by title.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=5;" parent="1" vertex="1">
+        <mxCell id="a_npDEzN0BsekQgwolWE-6" value="uses" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="hn-client" target="a_npDEzN0BsekQgwolWE-5">
+          <mxGeometry x="-0.1111" y="-10" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hn-client" value="&lt;b&gt;TodoSyncWithHackerNews&lt;/b&gt;&lt;br&gt;[Component: Orchestrator]&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Fetches top stories from&lt;br&gt;Hacker News.&lt;br&gt;Deduplicates by title.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=5;" parent="1" vertex="1">
           <mxGeometry x="280" y="400" width="280" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="repository" value="&lt;b&gt;TodoRepository&lt;/b&gt;&lt;br&gt;[Component: Spring Data JPA]&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;CRUD + findByTitle()&lt;br&gt;+ getPendingTodos()&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=5;" parent="1" vertex="1">
-          <mxGeometry x="620" y="400" width="280" height="120" as="geometry" />
+        <mxCell id="a_npDEzN0BsekQgwolWE-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="repository" target="a_npDEzN0BsekQgwolWE-3">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="entity" value="&lt;b&gt;Todo&lt;/b&gt;&lt;br&gt;[Component: JPA Entity]&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;id, title, link,&lt;br&gt;completed, order&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=5;" parent="1" vertex="1">
-          <mxGeometry x="460" y="580" width="280" height="100" as="geometry" />
+        <mxCell id="repository" value="&lt;b&gt;TodoRepository&lt;/b&gt;&lt;br&gt;[Component: Repository]&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;CRUD + findByTitle()&lt;br&gt;+ getPendingTodos()&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=5;" parent="1" vertex="1">
+          <mxGeometry x="650" y="400" width="280" height="120" as="geometry" />
         </mxCell>
         <mxCell id="hn-api" value="&lt;b&gt;Hacker News API&lt;/b&gt;&lt;br&gt;[External System]&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;hacker-news.firebaseio.com/v0/&lt;br&gt;beststories.json, item/{id}.json&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#8C8C8C;fontSize=12;arcSize=0;" parent="1" vertex="1">
-          <mxGeometry x="-180" y="400" width="280" height="120" as="geometry" />
+          <mxGeometry x="-520" y="400" width="280" height="120" as="geometry" />
         </mxCell>
         <mxCell id="database" value="&lt;b&gt;PostgreSQL 15&lt;/b&gt;&lt;br&gt;[Database]&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Stores todos table.&lt;br&gt;Schema managed by Flyway.&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#999999;fontColor=#ffffff;strokeColor=#8C8C8C;fontSize=12;size=15;boundedLbl=1;" parent="1" vertex="1">
-          <mxGeometry x="1040" y="390" width="200" height="140" as="geometry" />
+          <mxGeometry x="1280" y="390" width="200" height="140" as="geometry" />
         </mxCell>
         <mxCell id="rel-user-controller" value="GET/POST/PATCH/DELETE /todos&#xa;[HTTP/JSON]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#707070;strokeWidth=2;fontSize=11;fontColor=#707070;fontStyle=1" parent="1" source="user" target="controller" edge="1">
           <mxGeometry x="-0.3846" y="100" relative="1" as="geometry">
@@ -43,7 +48,7 @@
             <mxPoint x="-8" y="-20" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rel-hn-api" value="GET /beststories.json&#xa;GET /item/{id}.json&#xa;&#xa;[HTTP/JSON via WebClient]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#707070;strokeWidth=2;fontSize=11;fontColor=#707070;" parent="1" source="hn-client" target="hn-api" edge="1">
+        <mxCell id="rel-hn-api" value="GET /beststories.json&#xa;GET /item/{id}.json&#xa;&#xa;[HTTP/JSON via WebClient]" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#707070;strokeWidth=2;fontSize=11;fontColor=#707070;" parent="1" source="a_npDEzN0BsekQgwolWE-5" target="hn-api" edge="1">
           <mxGeometry y="40" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
@@ -53,23 +58,19 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rel-repo-db" value="SQL / JDBC" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#707070;strokeWidth=2;fontSize=11;fontColor=#707070;" parent="1" source="repository" target="database" edge="1">
+        <mxCell id="rel-repo-db" value="SQL / JDBC" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#707070;strokeWidth=2;fontSize=11;fontColor=#707070;exitPerimeter=0;" parent="1" source="a_npDEzN0BsekQgwolWE-3" target="database" edge="1">
           <mxGeometry x="0.2857" y="20" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rel-repo-entity" value="manages" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeColor=#707070;strokeWidth=2;dashed=1;fontSize=11;fontColor=#707070;" parent="1" source="repository" target="entity" edge="1">
+        <mxCell id="a_npDEzN0BsekQgwolWE-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="system-boundary" target="system-boundary">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="rel-hn-entity" value="creates" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeColor=#707070;strokeWidth=2;dashed=1;fontSize=11;fontColor=#707070;" parent="1" source="hn-client" target="entity" edge="1">
-          <mxGeometry x="-0.2941" y="-10" relative="1" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
+        <mxCell id="a_npDEzN0BsekQgwolWE-3" value="&lt;b&gt;SpringTodoRepository&lt;/b&gt;&lt;br&gt;[Component: pring JPA Repository]&lt;br&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Implements TodoRepositor operations&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="980" y="400" width="210" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="a_npDEzN0BsekQgwolWE-1" value="Text" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="rel-hn-entity">
-          <mxGeometry x="-0.0118" y="20" relative="1" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
+        <mxCell id="a_npDEzN0BsekQgwolWE-5" value="&lt;b&gt;HackerNewsClient&lt;/b&gt;&lt;br&gt;[Component: HTTP client]&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;Fetches top stories and single items from&lt;br&gt;Hacker News via WebClient.&lt;br&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;fontColor=#ffffff;strokeColor=#3C7FC0;fontSize=12;arcSize=5;" vertex="1" parent="1">
+          <mxGeometry x="-30" y="400" width="220" height="120" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
