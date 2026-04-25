@@ -1,5 +1,6 @@
 package com.atomicjar.todos.config;
 
+import com.atomicjar.todos.hn.HackerNewsClient;
 import com.atomicjar.todos.hn.TodoSyncWithHackerNews;
 import com.atomicjar.todos.repository.SpringTodoRepository;
 import com.atomicjar.todos.repository.TodoRepository;
@@ -19,6 +20,6 @@ public class ApplicationConfig {
     TodoSyncWithHackerNews todoSyncWithHackerNews(
         @Value("${hackernews.base-url:https://hacker-news.firebaseio.com/v0/}") String baseUrl,
         TodoRepository todoRepository) {
-        return new TodoSyncWithHackerNews(baseUrl, todoRepository);
+        return new TodoSyncWithHackerNews(new HackerNewsClient(baseUrl), todoRepository);
     }
 }
