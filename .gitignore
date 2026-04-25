@@ -10,3 +10,10 @@ target/
 *.iml
 *.ipr
 *.iws
+
+# Claude stuff
+.claude
+CLAUDE.md
+
+# draw.io stuff
+.$c4-component-diagram.drawio.bkp
