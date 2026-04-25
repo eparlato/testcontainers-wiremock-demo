@@ -2,6 +2,7 @@ package com.atomicjar.todos.web;
 
 import com.atomicjar.todos.entity.Todo;
 import com.atomicjar.todos.repository.SpringTodoRepository;
+import com.atomicjar.todos.repository.TodoRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,9 +35,12 @@ public class TodoControllerTests {
     @Autowired
     SpringTodoRepository springTodoRepository;
 
+    TodoRepository repository;
+
     @BeforeEach
     void setUp() {
-        springTodoRepository.deleteAll();
+        repository = new TodoRepository(springTodoRepository);
+        repository.deleteAll();
         RestAssured.baseURI = "http://localhost:" + port;
     }
 
@@ -46,7 +50,7 @@ public class TodoControllerTests {
                 new Todo(null, "Todo Item 1", "aLink", false, 1),
                 new Todo(null, "Todo Item 2", "aLink", false, 2)
         );
-        springTodoRepository.saveAll(todos);
+        repository.saveAll(todos);
 
         given()
                 .contentType(ContentType.JSON)
@@ -59,7 +63,7 @@ public class TodoControllerTests {
 
     @Test
     void shouldGetTodoById() {
-        Todo todo = springTodoRepository.save(new Todo(null, "Todo Item 1", "aProperLink", false, 1));
+        Todo todo = repository.save(new Todo(null, "Todo Item 1", "aProperLink", false, 1));
 
         given()
                 .contentType(ContentType.JSON)
@@ -97,9 +101,9 @@ public class TodoControllerTests {
 
     @Test
     void shouldDeleteTodoById() {
-        Todo todo = springTodoRepository.save(new Todo(null, "Todo Item 1", "aLink", false, 1));
+        Todo todo = repository.save(new Todo(null, "Todo Item 1", "aLink", false, 1));
 
-        assertThat(springTodoRepository.findById(todo.getId())).isPresent();
+        assertThat(repository.findById(todo.getId())).isPresent();
         given()
                 .contentType(ContentType.JSON)
                 .when()
@@ -107,6 +111,6 @@ public class TodoControllerTests {
                 .then()
                 .statusCode(200);
 
-        assertThat(springTodoRepository.findById(todo.getId())).isEmpty();
+        assertThat(repository.findById(todo.getId())).isEmpty();
     }
 }
