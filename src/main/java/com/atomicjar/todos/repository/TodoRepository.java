@@ -1,7 +1,7 @@
 package com.atomicjar.todos.repository;
 
-import com.atomicjar.todos.entity.Todo;
-import com.atomicjar.todos.entity.TodoEntity;
+import com.atomicjar.todos.domain.Todo;
+import com.atomicjar.todos.repository.entity.TodoEntity;
 import com.atomicjar.todos.hn.HackernewsItem;
 
 import java.util.List;

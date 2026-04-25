@@ -1,6 +1,6 @@
 package com.atomicjar.todos;
 
-import com.atomicjar.todos.entity.TodoEntity;
+import com.atomicjar.todos.repository.entity.TodoEntity;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.path.json.JsonPath;

@@ -1,6 +1,6 @@
 package com.atomicjar.todos;
 
-import com.atomicjar.todos.entity.Todo;
+import com.atomicjar.todos.domain.Todo;
 import com.atomicjar.todos.repository.TodoRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;

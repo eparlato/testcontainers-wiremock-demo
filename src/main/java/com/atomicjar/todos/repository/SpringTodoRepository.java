@@ -1,6 +1,6 @@
 package com.atomicjar.todos.repository;
 
-import com.atomicjar.todos.entity.TodoEntity;
+import com.atomicjar.todos.repository.entity.TodoEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.ListPagingAndSortingRepository;

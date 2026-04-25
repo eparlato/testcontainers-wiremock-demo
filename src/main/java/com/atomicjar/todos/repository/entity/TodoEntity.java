@@ -1,5 +1,6 @@
-package com.atomicjar.todos.entity;
+package com.atomicjar.todos.repository.entity;
 
+import com.atomicjar.todos.domain.Todo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

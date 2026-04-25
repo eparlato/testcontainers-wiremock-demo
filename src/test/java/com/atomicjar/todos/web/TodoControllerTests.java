@@ -1,6 +1,6 @@
 package com.atomicjar.todos.web;
 
-import com.atomicjar.todos.entity.Todo;
+import com.atomicjar.todos.domain.Todo;
 import com.atomicjar.todos.repository.SpringTodoRepository;
 import com.atomicjar.todos.repository.TodoRepository;
 import io.restassured.RestAssured;
