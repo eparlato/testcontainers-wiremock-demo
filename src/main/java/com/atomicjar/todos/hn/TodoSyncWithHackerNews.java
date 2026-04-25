@@ -1,6 +1,5 @@
 package com.atomicjar.todos.hn;
 
-import com.atomicjar.todos.entity.Todo;
 import com.atomicjar.todos.repository.TodoRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,12 +13,12 @@ import java.util.List;
 public class TodoSyncWithHackerNews {
 
   private final String baseUrl;
-  private final TodoRepository todoRepository;
+    private final TodoRepository todoRepository;
 
-  public TodoSyncWithHackerNews(String baseUrl, TodoRepository todoRepository) {
-    this.baseUrl = baseUrl;
-    this.todoRepository = todoRepository;
-  }
+    public TodoSyncWithHackerNews(String baseUrl, TodoRepository todoRepository) {
+        this.baseUrl = baseUrl;
+        this.todoRepository = todoRepository;
+    }
 
 
   // method to return Spring WebClient object for querying the Hackernews API
@@ -35,7 +34,7 @@ public class TodoSyncWithHackerNews {
       List<Integer> ids = fetchTopStoryIds(n);
       for (Integer id : ids) {
         HackernewsItem item = fetchItem(id);
-        saveItem(item);
+        todoRepository.saveHackerNewsItem(item);
       }
     }).subscribeOn(Schedulers.boundedElastic()).subscribe();
   }
@@ -56,15 +55,6 @@ public class TodoSyncWithHackerNews {
         .retrieve()
         .bodyToMono(HackernewsItem.class)
         .block();
-  }
-
-  void saveItem(HackernewsItem hnItem) {
-    String title = hnItem.title();
-    List<Todo> byTitle = todoRepository.findByTitle(title);
-    if (byTitle.isEmpty()) {
-      Todo todo = new Todo(null, title, hnItem.url(), false, hnItem.descendants());
-      todoRepository.save(todo);
-    }
   }
 
 }

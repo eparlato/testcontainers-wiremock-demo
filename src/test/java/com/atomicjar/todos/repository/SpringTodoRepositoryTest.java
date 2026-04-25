@@ -15,10 +15,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
         "spring.datasource.url=jdbc:tc:postgresql:15-alpine:///todos"
 })
-class TodoRepositoryTest {
+class SpringTodoRepositoryTest {
 
     @Autowired
-    TodoRepository repository;
+    SpringTodoRepository repository;
 
     @BeforeEach
     void setUp() {

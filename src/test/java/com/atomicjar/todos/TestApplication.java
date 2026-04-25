@@ -1,7 +1,7 @@
 package com.atomicjar.todos;
 
 import com.atomicjar.todos.entity.Todo;
-import com.atomicjar.todos.repository.TodoRepository;
+import com.atomicjar.todos.repository.SpringTodoRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -23,26 +23,26 @@ public class TestApplication {
 @Component
 class DataLoader {
 
-    private TodoRepository todoRepository;
+    private SpringTodoRepository springTodoRepository;
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public DataLoader(TodoRepository todoRepository, JdbcTemplate jdbcTemplate) {
-        this.todoRepository = todoRepository;
+    public DataLoader(SpringTodoRepository springTodoRepository, JdbcTemplate jdbcTemplate) {
+        this.springTodoRepository = springTodoRepository;
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @PostConstruct
     public void addTodo() {
-        if(!todoRepository.findAll().isEmpty()) {
+        if(!springTodoRepository.findAll().isEmpty()) {
             return;
         }
         Todo t1 = new Todo();
         t1.setTitle("Learn about Testcontainers");
-        todoRepository.save(t1);
+        springTodoRepository.save(t1);
 
         Todo t2 = new Todo();
         t2.setTitle("Learn about WireMock");
-        todoRepository.save(t2);
+        springTodoRepository.save(t2);
     }
 }

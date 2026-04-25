@@ -1,15 +1,24 @@
 package com.atomicjar.todos.repository;
 
 import com.atomicjar.todos.entity.Todo;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.ListCrudRepository;
-import org.springframework.data.repository.ListPagingAndSortingRepository;
+import com.atomicjar.todos.hn.HackernewsItem;
 
 import java.util.List;
 
-public interface TodoRepository extends ListCrudRepository<Todo, String>, ListPagingAndSortingRepository<Todo, String> {
-    @Query("select t from Todo t where t.completed = false")
-    List<Todo> getPendingTodos();
+public class TodoRepository {
 
-    List<Todo> findByTitle(String title);
+    private final SpringTodoRepository springTodoRepository;
+
+    public TodoRepository(SpringTodoRepository springTodoRepository) {
+        this.springTodoRepository = springTodoRepository;
+    }
+
+    public void saveHackerNewsItem(HackernewsItem hnItem) {
+        String title = hnItem.title();
+        List<Todo> byTitle = springTodoRepository.findByTitle(title);
+        if (byTitle.isEmpty()) {
+            Todo todo = new Todo(null, title, hnItem.url(), false, hnItem.descendants());
+            springTodoRepository.save(todo);
+        }
+    }
 }

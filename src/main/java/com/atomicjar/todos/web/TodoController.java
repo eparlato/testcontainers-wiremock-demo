@@ -2,7 +2,7 @@ package com.atomicjar.todos.web;
 
 import com.atomicjar.todos.entity.Todo;
 import com.atomicjar.todos.hn.TodoSyncWithHackerNews;
-import com.atomicjar.todos.repository.TodoRepository;
+import com.atomicjar.todos.repository.SpringTodoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +12,10 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/todos")
 public class TodoController {
-    private final TodoRepository repository;
+    private final SpringTodoRepository repository;
     private final TodoSyncWithHackerNews todoSyncWithHackerNews;
 
-    public TodoController(TodoRepository repository, TodoSyncWithHackerNews todoSyncWithHackerNews) {
+    public TodoController(SpringTodoRepository repository, TodoSyncWithHackerNews todoSyncWithHackerNews) {
         this.repository = repository;
         this.todoSyncWithHackerNews = todoSyncWithHackerNews;
     }
