@@ -4,14 +4,14 @@ import com.atomicjar.todos.entity.Todo;
 import com.atomicjar.todos.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.io.IOException;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 import java.util.List;
 
 // class to query the Hackernews API, and return HackernewsItem objects
@@ -33,26 +33,34 @@ public class HackernewsClient {
         .build();
   }
 
-  // method to query the Hackernews API, and return a HackernewsItem object
   public void getTopStories(int n) {
-    getWebClient().get()
+    fetchTopStoryIds(n)
+        .flatMap(this::fetchItem)
+        .subscribe(this::saveItem);
+  }
+
+  Flux<Integer> fetchTopStoryIds(int n) {
+    return getWebClient().get()
         .uri("beststories.json")
         .retrieve()
         .bodyToFlux(Integer.class)
-        .take(n)
-        .flatMap(id -> getWebClient().get()
-            .uri("item/{id}.json", id)
-            .retrieve()
-            .bodyToMono(HackernewsItem.class))
-        .subscribe(hnItem ->
-        {
-          String title = hnItem.title();
-          List<Todo> byTitle = todoRepository.findByTitle(title);
-          if(byTitle.isEmpty()) {
-            Todo todo = new Todo(null, title, hnItem.url(), false, hnItem.descendants());
-            todoRepository.save(todo);
-          }
-        });
+        .take(n);
+  }
+
+  Mono<HackernewsItem> fetchItem(Integer id) {
+    return getWebClient().get()
+        .uri("item/{id}.json", id)
+        .retrieve()
+        .bodyToMono(HackernewsItem.class);
+  }
+
+  void saveItem(HackernewsItem hnItem) {
+    String title = hnItem.title();
+    List<Todo> byTitle = todoRepository.findByTitle(title);
+    if (byTitle.isEmpty()) {
+      Todo todo = new Todo(null, title, hnItem.url(), false, hnItem.descendants());
+      todoRepository.save(todo);
+    }
   }
 
 }
