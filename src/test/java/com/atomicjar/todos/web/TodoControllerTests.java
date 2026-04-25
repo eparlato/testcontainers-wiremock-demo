@@ -43,8 +43,8 @@ public class TodoControllerTests {
     @Test
     void shouldGetAllTodos() {
         List<Todo> todos = List.of(
-                new Todo(null, "Todo Item 1", false, 1),
-                new Todo(null, "Todo Item 2", false, 2)
+                new Todo(null, "Todo Item 1", "aLink", false, 1),
+                new Todo(null, "Todo Item 2", "aLink", false, 2)
         );
         todoRepository.saveAll(todos);
 
@@ -59,7 +59,7 @@ public class TodoControllerTests {
 
     @Test
     void shouldGetTodoById() {
-        Todo todo = todoRepository.save(new Todo(null, "Todo Item 1", false, 1));
+        Todo todo = todoRepository.save(new Todo(null, "Todo Item 1", "aProperLink", false, 1));
 
         given()
                 .contentType(ContentType.JSON)
@@ -69,6 +69,7 @@ public class TodoControllerTests {
                 .statusCode(200)
                 .body("title", is("Todo Item 1"))
                 .body("completed", is(false))
+                .body("link", is("aProperLink"))
                 .body("order", is(1));
     }
 
@@ -96,7 +97,7 @@ public class TodoControllerTests {
 
     @Test
     void shouldDeleteTodoById() {
-        Todo todo = todoRepository.save(new Todo(null, "Todo Item 1", false, 1));
+        Todo todo = todoRepository.save(new Todo(null, "Todo Item 1", "aLink", false, 1));
 
         assertThat(todoRepository.findById(todo.getId())).isPresent();
         given()
