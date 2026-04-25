@@ -1,6 +1,6 @@
 package com.atomicjar.todos.repository;
 
-import com.atomicjar.todos.entity.Todo;
+import com.atomicjar.todos.entity.TodoEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +26,9 @@ class TodoRepositoryTest {
     void setUp() {
         repository = new TodoRepository(springTodoRepository);
         repository.deleteAll();
-        repository.save(new Todo(null, "Todo Item 1", "aLink", true, 1));
-        repository.save(new Todo(null, "Todo Item 2", "aLink", false, 2));
-        repository.save(new Todo(null, "Todo Item 3", "aLink", false, 3));
+        repository.save(new TodoEntity(null, "Todo Item 1", "aLink", true, 1));
+        repository.save(new TodoEntity(null, "Todo Item 2", "aLink", false, 2));
+        repository.save(new TodoEntity(null, "Todo Item 3", "aLink", false, 3));
     }
 
     @Test

@@ -1,6 +1,6 @@
 package com.atomicjar.todos.repository;
 
-import com.atomicjar.todos.entity.Todo;
+import com.atomicjar.todos.entity.TodoEntity;
 import com.atomicjar.todos.hn.HackernewsItem;
 import jakarta.validation.Valid;
 
@@ -17,26 +17,26 @@ public class TodoRepository {
 
     public void saveHackerNewsItem(HackernewsItem hnItem) {
         String title = hnItem.title();
-        List<Todo> byTitle = springTodoRepository.findByTitle(title);
+        List<TodoEntity> byTitle = springTodoRepository.findByTitle(title);
         if (byTitle.isEmpty()) {
-            Todo todo = new Todo(null, title, hnItem.url(), false, hnItem.descendants());
+            TodoEntity todo = new TodoEntity(null, title, hnItem.url(), false, hnItem.descendants());
             springTodoRepository.save(todo);
         }
     }
 
-    public List<Todo> findAll() {
+    public List<TodoEntity> findAll() {
         return springTodoRepository.findAll();
     }
 
-    public Optional<Todo> findById(String id) {
+    public Optional<TodoEntity> findById(String id) {
         return springTodoRepository.findById(id);
     }
 
-    public Todo save(@Valid Todo todo) {
+    public TodoEntity save(@Valid TodoEntity todo) {
         return springTodoRepository.save(todo);
     }
 
-    public void delete(Todo todo) {
+    public void delete(TodoEntity todo) {
         springTodoRepository.delete(todo);
     }
 
@@ -44,11 +44,11 @@ public class TodoRepository {
         springTodoRepository.deleteAll();
     }
 
-    public void saveAll(List<Todo> todos) {
+    public void saveAll(List<TodoEntity> todos) {
         springTodoRepository.saveAll(todos);
     }
 
-    public List<Todo> getPendingTodos() {
+    public List<TodoEntity> getPendingTodos() {
         return springTodoRepository.getPendingTodos();
     }
 }

@@ -1,6 +1,6 @@
 package com.atomicjar.todos.web;
 
-import com.atomicjar.todos.entity.Todo;
+import com.atomicjar.todos.entity.TodoEntity;
 import com.atomicjar.todos.hn.TodoSyncWithHackerNews;
 import com.atomicjar.todos.repository.TodoRepository;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class TodoController {
     }
 
     @GetMapping
-    public Iterable<Todo> getAll() {
+    public Iterable<TodoEntity> getAll() {
         return todoRepository.findAll();
     }
 
@@ -31,16 +31,16 @@ public class TodoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Todo> getById(@PathVariable String id) {
+    public ResponseEntity<TodoEntity> getById(@PathVariable String id) {
         return todoRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new TodoNotFoundException(id));
     }
 
     @PostMapping
-    public ResponseEntity<Todo> save(@Valid @RequestBody Todo todo) {
+    public ResponseEntity<TodoEntity> save(@Valid @RequestBody TodoEntity todo) {
         todo.setId(null);
-        Todo savedTodo = todoRepository.save(todo);
+        TodoEntity savedTodo = todoRepository.save(todo);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .header("Location", savedTodo.getUrl())
@@ -48,8 +48,8 @@ public class TodoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Todo> update(@PathVariable String id, @Valid @RequestBody Todo todo) {
-        Todo existingTodo = todoRepository.findById(id).orElseThrow(() -> new TodoNotFoundException(id));
+    public ResponseEntity<TodoEntity> update(@PathVariable String id, @Valid @RequestBody TodoEntity todo) {
+        TodoEntity existingTodo = todoRepository.findById(id).orElseThrow(() -> new TodoNotFoundException(id));
         if(todo.getCompleted() != null) {
             existingTodo.setCompleted(todo.getCompleted());
 
@@ -61,13 +61,13 @@ public class TodoController {
         if(todo.getTitle() != null) {
             existingTodo.setTitle(todo.getTitle());
         }
-        Todo updatedTodo = todoRepository.save(existingTodo);
+        TodoEntity updatedTodo = todoRepository.save(existingTodo);
         return ResponseEntity.ok(updatedTodo);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable String id) {
-        Todo todo = todoRepository.findById(id).orElseThrow(() -> new TodoNotFoundException(id));
+        TodoEntity todo = todoRepository.findById(id).orElseThrow(() -> new TodoNotFoundException(id));
         todoRepository.delete(todo);
         return ResponseEntity.ok().build();
     }

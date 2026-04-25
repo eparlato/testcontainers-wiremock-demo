@@ -1,6 +1,6 @@
 package com.atomicjar.todos;
 
-import com.atomicjar.todos.entity.Todo;
+import com.atomicjar.todos.entity.TodoEntity;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.path.json.JsonPath;
@@ -40,7 +40,7 @@ class ApplicationTests {
                 .then().statusCode(200)
                 .extract().body().jsonPath();
 
-            List<Todo> todos = jsonPath.getList("", Todo.class);
+            List<TodoEntity> todos = jsonPath.getList("", TodoEntity.class);
             System.out.println(todos);
             Assertions.assertThat(todos).hasSize(6);
         });
