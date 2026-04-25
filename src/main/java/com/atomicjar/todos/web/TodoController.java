@@ -39,7 +39,7 @@ public class TodoController {
 
     @PostMapping
     public ResponseEntity<Todo> save(@Valid @RequestBody Todo todo) {
-        Todo savedTodo = todoRepository.save(todo);
+        Todo savedTodo = todoRepository.save(nullifyIncomingTodoId(todo));
         String locationUrl = ServletUriComponentsBuilder.fromCurrentContextPath().toUriString() + "/todos/" + savedTodo.id();
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -73,5 +73,10 @@ public class TodoController {
     public ResponseEntity<Void> deleteAll() {
         todoRepository.deleteAll();
         return ResponseEntity.ok().build();
+    }
+
+
+    private Todo nullifyIncomingTodoId(Todo todo) {
+        return new Todo(null, todo.title(), todo.link(), todo.completed(), todo.order());
     }
 }
