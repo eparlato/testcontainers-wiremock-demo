@@ -9,8 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.List;
 
@@ -34,24 +34,31 @@ public class HackernewsClient {
   }
 
   public void getTopStories(int n) {
-    fetchTopStoryIds(n)
-        .flatMap(this::fetchItem)
-        .subscribe(this::saveItem);
+    Mono.fromRunnable(() -> {
+      List<Integer> ids = fetchTopStoryIds(n);
+      for (Integer id : ids) {
+        HackernewsItem item = fetchItem(id);
+        saveItem(item);
+      }
+    }).subscribeOn(Schedulers.boundedElastic()).subscribe();
   }
 
-  Flux<Integer> fetchTopStoryIds(int n) {
+  List<Integer> fetchTopStoryIds(int n) {
     return getWebClient().get()
         .uri("beststories.json")
         .retrieve()
         .bodyToFlux(Integer.class)
-        .take(n);
+        .take(n)
+        .collectList()
+        .block();
   }
 
-  Mono<HackernewsItem> fetchItem(Integer id) {
+  HackernewsItem fetchItem(Integer id) {
     return getWebClient().get()
         .uri("item/{id}.json", id)
         .retrieve()
-        .bodyToMono(HackernewsItem.class);
+        .bodyToMono(HackernewsItem.class)
+        .block();
   }
 
   void saveItem(HackernewsItem hnItem) {
