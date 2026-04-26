@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
         "spring.datasource.url=jdbc:tc:postgresql:15-alpine:///todos"
 })
-class TodoRepositoryTest {
+class TodoRepositoryIntegrationTests {
 
     @Autowired
     SpringTodoRepository springTodoRepository;
