@@ -35,4 +35,10 @@ class TodoRepositoryIntegrationTests {
     void shouldGetPendingTodos() {
         assertThat(repository.getPendingTodos()).hasSize(2);
     }
+
+    // TODO saveHackerNewsItem with item present
+
+    // TODO saveHackerNewsItem with item missing
+
+    // TODO tests for CRUD operations...
 }
