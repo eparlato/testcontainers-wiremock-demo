@@ -24,7 +24,7 @@ classes = {ContainersConfig.class})
 class ApplicationTests {
 
     @Test
-    void contextLoads() {
+    void getsNewsFromHackerNews() {
         given(requestSpecification)
             .when().post("/todos/hn")
             .then().statusCode(200);
@@ -41,6 +41,8 @@ class ApplicationTests {
             Assertions.assertThat(todos).hasSize(6);
         });
     }
+
+    // TODO test other scenarios
 
     protected RequestSpecification requestSpecification;
 
