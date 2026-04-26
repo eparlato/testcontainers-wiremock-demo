@@ -6,7 +6,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wiremock.integrations.testcontainers.WireMockContainer;
 
 @Testcontainers
-class HackerNewsClientIntegrationTest {
+class HackerNewsClientIntegrationTests {
 
     @Container
     static WireMockContainer wireMock = new WireMockContainer("wiremock/wiremock:3.1.0")
