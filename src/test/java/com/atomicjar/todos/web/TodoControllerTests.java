@@ -113,4 +113,6 @@ public class TodoControllerTests {
 
         assertThat(repository.findById(todo.id())).isEmpty();
     }
+
+    // TODO do we need to test /hn route in this test class?
 }
