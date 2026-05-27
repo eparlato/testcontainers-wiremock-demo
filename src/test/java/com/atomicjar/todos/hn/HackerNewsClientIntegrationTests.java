@@ -5,6 +5,8 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.wiremock.integrations.testcontainers.WireMockContainer;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @Testcontainers
 class HackerNewsClientIntegrationTests {
 
@@ -16,6 +18,9 @@ class HackerNewsClientIntegrationTests {
     void shouldFetchItem() {
         HackerNewsClient client = new HackerNewsClient(wireMock.getBaseUrl());
 
+        HackernewsItem item = client.fetchItem(12346);
+
+        assertThat(item).isNotNull();
         // TODO complete
     }
 
